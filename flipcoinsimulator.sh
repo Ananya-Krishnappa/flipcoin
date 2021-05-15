@@ -1,6 +1,7 @@
 #!/bin/bash
 headcount=0
 tailcount=0
+isThereATie=0
 while [[ $headcount -lt 21 || $tailcount -lt 21 ]]
 do
     Flip=$(($(($RANDOM%10))%2))
@@ -24,5 +25,23 @@ do
 					break
 				fi
         	fi
+		fi
+		if [ $headcount -eq $tailcount ]
+		then
+			isThereATie=1
+		fi
+		if [ $isThereATie -eq 1 ]
+		then
+			diff=$(($headcount-$tailcount))
+			if [ $diff -eq 2 ]
+			then
+				echo "head is leading with 2 points. Headcount is" $headcount "Tailcount is" $tailcount
+				break
+			fi
+			if [ $diff -eq -2 ]
+			then
+				 echo "tail is leading with 2 points. Headcount is" $headcount "Tailcount is" $tailcount
+				 break
+			fi
 		fi
 done
