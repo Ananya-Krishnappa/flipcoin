@@ -1,19 +1,28 @@
 #!/bin/bash
 headcount=0
 tailcount=0
-n=0
-while [ $n -le 20 ]
+while [[ $headcount -lt 21 || $tailcount -lt 21 ]]
 do
-	 n=$((n+1))
     Flip=$(($(($RANDOM%10))%2))
     if [ $Flip -eq 1 ]
     then
         echo "heads"
         headcount=$((headcount+1))
+		  if [ $headcount -eq 21 ]
+        then
+				echo "head wins by" $(($headcount-$tailcount))
+            break
+        fi
     else
-        echo "tails"
-        tailcount=$((tailcount+1))
-    fi
+		  if [ $Flip -eq 0 ]
+		  then
+				echo "tails"
+        		tailcount=$((tailcount+1))
+		  		if [ $tailcount -eq 21 ]
+            then
+					echo "tail wins by" $(($tailcount-$headcount))
+					break
+				fi
+        	fi
+		fi
 done
-echo "head count is" $headcount "and tail count is" $tailcount
-
